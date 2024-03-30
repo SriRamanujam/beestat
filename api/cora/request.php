@@ -142,12 +142,19 @@ final class request {
   public function process($request) {
     $this->request = $request;
 
+    error_log(print_r("rate limit", true));
     $this->rate_limit();
+    error_log(print_r("force ssl", true));
     $this->force_ssl();
 
+    error_log(print_r("set api user", true));
     $this->set_api_user();
+
+    error_log(print_r("set api calls", true));
     $this->set_api_calls();
+    error_log(print_r("validate aliases", true));
     $this->validate_aliases();
+    error_log(print_r("set default headers", true));
     $this->set_default_headers();
 
     // Touch the session, if there is one. If the API user does not have a
@@ -157,6 +164,7 @@ final class request {
 
     // Process each request.
     foreach($this->api_calls as $api_call) {
+      error_log(print_r("processing api call", true));
       $api_call->process();
     }
 
