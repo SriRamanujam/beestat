@@ -46,7 +46,6 @@ if($post_body !== '') {
 // Go!
 error_log(print_r($data, TRUE));
 error_log(print_r($_SERVER, true));
-error_log(print_r($request, true));
 $request->process($data);
 
 // Useful function

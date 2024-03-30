@@ -142,6 +142,8 @@ final class request {
   public function process($request) {
     $this->request = $request;
 
+    error_log(print_r($this->request, true));
+
     error_log(print_r("rate limit", true));
     $this->rate_limit();
     error_log(print_r("force ssl", true));
