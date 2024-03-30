@@ -142,12 +142,21 @@ final class request {
   public function process($request) {
     $this->request = $request;
 
+    error_log(print_r($this->request, true));
+
+    error_log(print_r("rate limit", true));
     $this->rate_limit();
+    error_log(print_r("force ssl", true));
     $this->force_ssl();
 
+    error_log(print_r("set api user", true));
     $this->set_api_user();
+
+    error_log(print_r("set api calls", true));
     $this->set_api_calls();
+    error_log(print_r("validate aliases", true));
     $this->validate_aliases();
+    error_log(print_r("set default headers", true));
     $this->set_default_headers();
 
     // Touch the session, if there is one. If the API user does not have a
@@ -157,6 +166,7 @@ final class request {
 
     // Process each request.
     foreach($this->api_calls as $api_call) {
+      error_log(print_r("processing api call", true));
       $api_call->process();
     }
 
@@ -264,13 +274,18 @@ final class request {
    */
   private function set_api_user() {
     // Make sure the API key that was sent is present and valid.
+    error_log(print_r("checking if api key is set in request", true));
     if(isset($this->request['api_key']) === false) {
+      error_log(print_r("api key is required", true));
       throw new exception('API Key is required.', 1000);
     }
 
+    error_log(print_r("creating new api_user", true));
     $api_user_resource = new api_user();
+    error_log(print_r("reading api key from database", true));
     $api_users = $api_user_resource->read(['api_key' => $this->request['api_key']]);
     if(count($api_users) !== 1) {
+    error_log(print_r("API key is invalid", true));
       throw new exception('API key is invalid.', 1003);
     } else {
       $this->api_user = $api_users[0];
