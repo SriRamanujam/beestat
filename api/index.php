@@ -16,7 +16,7 @@ set_time_limit(5);
 
 // Turn on all error reporting but disable displaying errors.
 error_reporting(-1);
-ini_set('display_errors', '0');
+ini_set('display_errors', '1');
 
 date_default_timezone_set('UTC');
 
