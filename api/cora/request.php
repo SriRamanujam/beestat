@@ -272,13 +272,16 @@ final class request {
    */
   private function set_api_user() {
     // Make sure the API key that was sent is present and valid.
+    error_log(print_r("checking if api key is set in request", true));
     if(isset($this->request['api_key']) === false) {
       throw new exception('API Key is required.', 1000);
     }
 
     $api_user_resource = new api_user();
+    error_log(print_r("reading api key from database", true));
     $api_users = $api_user_resource->read(['api_key' => $this->request['api_key']]);
     if(count($api_users) !== 1) {
+    error_log(print_r("API key is invalid", true));
       throw new exception('API key is invalid.', 1003);
     } else {
       $this->api_user = $api_users[0];
