@@ -44,6 +44,7 @@ if($post_body !== '') {
 }
 
 // Go!
+error_log(print_r($data, TRUE));
 $request->process($data);
 
 // Useful function
